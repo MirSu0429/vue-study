@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>模板语法</title>
+  <script src="../../../static/js/vue.js"></script>
+  <style>
+    .class1 {
+      background: #444;
+      color: brown;
+    }
+  </style>
+</head>
+<body>
+<!--  v-html  -->
+<div id="text">
+ <!-- <p>{{msg}}</p>-->
+  <!--使用 v-html 指令用于输出 html 代码：-->
+  <div v-html="msg"></div>
+</div>
+<!--  v-bind  -->
+<div id="bind">
+  <!--判断 class1 的值，如果为 true 使用 class1 类的样式，否则不使用该类：-->
+  <label for="r1">修改颜色</label>
+  <input type="checkbox" id="r1" v-model="use">
+  <br><br>
+  <!--<div v-bind:class="{'class1':use}">-->
+  <div :class="{'class1':use}">
+    v-bing:class 指令
+  </div>
+<!--在这里 href 是参数，告知 v-bind 指令将该元素的 href 属性与表达式 url 的值绑定。-->
+  <!--<pre><a v-bind:href="url"> 百度一下，你就知道</a></pre>-->
+  <pre><a :href="url"> 百度一下，你就知道</a></pre>
+</div>
+<!--  表达式  -->
+<div id="div1">
+  <!--Vue.js 都提供了完全的 JavaScript 表达式支持。-->
+  {{5+5}} <br>
+  {{1==2?'yes':'no'}} <br>
+  {{message.split('').reverse().join('')}} <br>
+  {{message.split('').reverse().join('1')}} <br>
+  {{message.split('').join('1')}}
+  <div v-bind:id="'list'+id">学习vue</div>
+</div>
+
+<!--   v-if  -->
+<div id="v_if">
+  <!--v-if 指令将根据表达式 seen 的值(true 或 false )来决定是否插入 p 元素。-->
+  <p v-if="stu">我在看 v-if</p>
+</div>
+
+<!--   v-on  -->
+<div id="v_on">
+  <!--<a v-on:click="doSomeThing">点击事件</a> <br>-->
+  <a @click="doSomeThing">点击事件</a> <br>
+  <!--修饰符-->
+  <!--修饰符是以半角句号 . 指明的特殊后缀，用于指出一个指令应该以特殊方式绑定。
+  例如，.prevent 修饰符告诉 v-on 指令对于触发的事件调用 event.preventDefault()：-->
+  <form v-on:submit.prevent="onsubmit"></form><!--???-->
+</div>
+
+
+<!--   v-model  -->
+<!--   v-model 指令用来在 input、select、textarea、checkbox、radio
+等表单控件元素上创建双向数据绑定，根据表单上的值，自动更新绑定的元素的值-->
+<div id="v_model">
+  <p>{{msg}}</p>
+  <input v-model="msg"><br>
+  <br>
+  <!--<input type="button" v-on:click="reverseMsg" value="点位试试">-->
+  <input type="button" @click="reverseMsg" value="点位试试">
+  <br><br>
+  <buttn v-on:click="reverseMsg">点位试试</buttn>
+</div>
+
+<!--  filter-->
+<div id="v_filter">
+  <p>{{ msg | filt1("大家好！") | filt2('是兄弟','就来砍我啊！')}}</p>
+</div>
+<script>
+
+  new Vue({
+    el:'#text',
+    data:{
+      msg:'<h1>测试</h1>'
+    }
+  })
+
+  new Vue({
+    el:'#bind',
+    data:{
+      use: false,
+      url:'http://www.baidu.com'
+    }
+  })
+
+  new Vue({
+    el:'#div1',
+    data:{
+      ok : true,
+      message:'ABCDEF',
+      id:1
+    }
+  })
+
+  new Vue({
+    el:'v_if',
+    data:{
+      stu: true
+    }
+  })
+
+  new Vue({
+    el:'#v_on',
+    data:{},
+    methods:{
+      doSomeThing: function () {
+        alert('aaaaa')
+      }
+    }
+  })
+
+  new Vue({
+    el: '#v_model',
+    data:{
+      msg:'文本框'
+    },
+    methods: {
+      reverseMsg: function () {
+        this.msg = this.msg.split('').reverse().join('')
+      }
+    }
+  })
+
+  new Vue({
+    el: '#v_filter',
+    data:{
+      msg: '我是渣渣辉！'
+    },
+    filters:{
+      filt1: function (value,arg2) {
+        if (!value) {
+          return ''
+        }
+        value = value.toString()
+        return arg2 + value
+      },
+      filt2: function (value,arg2,arg3) {
+        if (!value) {
+          return ''
+        }
+        value = value.toString()
+        return value + arg2 + arg3
+      }
+    }
+  })
+</script>
+</body>
+</html>
