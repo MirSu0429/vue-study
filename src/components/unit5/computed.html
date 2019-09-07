@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算属性</title>
+    <script src="../../../static/js/vue.js"></script>
+</head>
+<body>
+  <div id="id1">
+      <p>
+        {{msg.split('').reverse().join('')}}
+      </p>
+  </div>
+<!--  computed vs methods
+    我们可以使用 methods 来替代 computed，
+    效果上两个都是一样的，但是
+    computed 是基于它的依赖缓存，
+    只有相关依赖发生改变时才会重新取值。
+    而使用 methods ，在重新渲染的时候，
+    函数总会重新调用执行。 -->
+  <div id="id2">
+    <p>原始字符串：{{msg}}</p>
+    <p>计算后反转字符串（computed属性)：{{reverseMsg}}</p>
+    <p>计算后反转字符串(函数)：{{reverseMsg2()}}</p>
+  </div>
+  <script>
+    new Vue({
+      el: '#id1',
+      data:{
+        msg:'computed'
+      }
+    })
+    new Vue({
+      el:'#id2',
+      data: {
+        msg: 'zhangjun'
+      },
+      computed:{
+        reverseMsg: function () {
+          return this.msg.split('').reverse().join('')
+        }
+      },
+      methods:{
+        reverseMsg2: function () {
+          return this.msg.split('').reverse().join('')
+        }
+      }
+
+    })
+    var vue = new Vue({
+      el: '#id3',
+      data:{
+        name:'vue',
+        url: 'www.vue.com'
+      },
+      computed: {
+        site:{
+          get: function () {
+            return this.name + '--' + this.url
+          },
+
+          set: function (newValue) {
+            var names = newValue.split('-')
+            this.name = names[0]
+            this.url = names[names.length - 1]
+          }
+        }
+      }
+    })
+    vue.site = '百度-www.baidu.com'
+    document.write('name---' + vue.name)
+    document.write('<br>')
+
+    document.write('url---' + vue.url)
+  </script>
+</body>
+</html>
