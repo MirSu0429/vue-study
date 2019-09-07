@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>循环语句</title>
+  <script src="../../../static/js/vue.js"></script>
+</head>
+<body>
+<!--v-for 指令需要以 site in sites 形式的特殊语法， sites 是源数据数组并且 site 是数组元素迭代的别名。-->
+<div id="v_for">
+  <ol>
+    <li v-for="item in items">
+      {{item.name}}
+    </li>
+  </ol>
+  <!--   模板中使用 v-for：-->
+  <ul>
+    <template v-for="item in items">
+      <li>{{item.name}}</li>
+      <li>-------</li>
+    </template>
+  </ul>
+</div>
+<div id="v_for2">
+  <ul>
+    <li v-for="v in object">
+      {{v}}
+    </li>
+    <!--第二个的参数为键名：-->
+    <li v-for="(value, key) in object">
+      {{key}}:{{value}}
+    </li>
+    <!--第三个参数为索引：-->
+    <li v-for="(value, key,index) in object">
+     {{index}} --{{key}}:{{value}}
+    </li>
+
+  </ul>
+</div>
+<div id="v_for_int">
+  <ul>
+    <li v-for="n in 10">
+      {{n}}
+    </li>
+  </ul>
+</div>
+<script>
+  new Vue({
+    el: '#v_for',
+    data:{
+      items:[
+        {name:'小红'},
+        {name:'小明'},
+        {name:'小红'},
+        {name:'张军'}
+      ]
+    }
+  })
+
+  new Vue({
+    el: '#v_for2',
+    data: {
+      object:{
+        name:'张军',
+        age:14,
+        sex:'女'
+      }
+    }
+  })
+
+  new Vue({
+    el:'#v_for_int'
+  })
+</script>
+</body>
+</html>
