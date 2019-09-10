@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车</title>
+    <script src="../../../static/js/vue.js"></script>
+    <style>
+      table {
+        border: 1px solid black;
+      }
+      table {
+        width: 100%;
+      }
+
+      th {
+        height: 50px;
+      }
+      th, td {
+        border-bottom: 1px solid #ddd;
+      }
+  </style>
+</head>
+<body>
+    <div id="cart">
+        <table>
+          <tr>
+            <th>序号</th>
+            <th>商品名称</th>
+            <th>商品价格</th>
+            <th>购买数量</th>
+            <th>操作</th>
+          </tr>
+          <tr v-for="item in ip_jsom">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.price}}</td>
+            <td>
+              <button v-bind:disabled="item.count===0" @click="item.count-=1">-</button>
+              {{item.count}}
+              <button @click="item.count+=1">+</button>
+            </td>
+            <td>
+              <button @click="item.count=0">移除</button>
+            </td>
+          </tr>
+        </table>
+
+      合计：{{totalPrice()}}
+    </div>
+    <script>
+        var vm = new Vue({
+          el: '#cart',
+          data:{
+            ip_jsom:[
+              {id:1,name:'iphone 8',price:'5099',count:1},
+              {id:2,name:'iphone 8x',price:'5499',count:1},
+              {id:3,name:'iphone 7',price:'4599',count:1},
+              {id:4,name:'iphone 6',price:'4099',count:1}
+            ]
+          },
+          methods:{
+            totalPrice: function () {
+              var total = 0
+              for (var i = 0; i < this.ip_jsom.length; i++) {
+                total += this.ip_jsom[i].count * this.ip_jsom[i].price
+              }
+              return total
+            }
+          }
+        })
+    </script>
+</body>
+</html>

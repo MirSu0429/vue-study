@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Km与M 单位换算</title>
+    <script src="../../../static/js/vue.js"></script>
+</head>
+<body>
+    <div id="div">
+      千米：<input type="text" v-model="KM">
+      <br>
+      <br>
+      米：<input type="text" v-model="M">
+
+    </div>
+    <script>
+      var vm = new Vue({
+        el: '#div',
+        data: {
+          KM: 0,
+          M: 0
+        },
+        methods: {},
+        computed: {},
+        watch: {
+          KM: function (val) {
+            this.KM = val
+            this.M = this.KM * 1000
+
+          },
+          M: function (val) {
+            this.M = val
+            this.KM = this.M / 1000
+
+          }
+        }
+
+      })
+    </script>
+</body>
+</html>
+
