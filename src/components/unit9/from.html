@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单组件</title>
+  <script src="../../../static/js/vue.js"></script>
+</head>
+<body>
+  <!-- v-model 指令在表单控件元素上创建双向数据绑定-->
+  <div id="from">
+    <p>input: 元素</p>
+    动态更新：<input placeholder="动态更新..." v-model="msg">
+    <br>
+    <!-- 在 "change" 而不是 "input" 事件中更新
+     失去焦点后同步
+     -->
+    失去焦点更新：<input placeholder="失去焦点更新..." v-model.lazy="msg">
+    <br>
+    <!--自动过滤用户输入的首尾空格-->
+    过滤首尾空格：<input placeholder="过滤首尾空格..." v-model.trim="msg">
+    <br>
+  <!--如果想自动将用户的输入值转为 Number 类型
+  （如果原值的转换结果为 NaN 则返回原值），
+  可以添加一个修饰符 number 给 v-model 来处理输入值-->
+    <p>文本框内容为：{{msg}}</p>
+    自动转换类型：<input type="number" v-model.number="msg" placeholder="自动转换类型">
+    <p>文本内容与数字类型1（msg===1）比较：{{msg===1}}</p>
+
+    <br>
+    <br>
+    <p>textarea 元素</p>
+    <textarea v-model="testMsg" placeholder="多行文本....."></textarea>
+    <p>多行文本内容为：{{testMsg}}</p>
+    <br><br>
+    <p>单个复选框：</p>
+    <label for="checkbox">{{checked}}</label>
+    <input type="checkbox" id="checkbox" v-model="checked" value="000">
+    <br>
+    <p>多个复选框：选中的是：{{checkeds}}</p>
+    <input type="checkbox" id="checkbox1" v-model="checkeds" value="AAA">
+    <label for="checkbox1">AAA</label>
+    <input type="checkbox" id="checkbox2" v-model="checkeds" value="BBB">
+    <label for="checkbox2">BBB</label>
+    <input type="checkbox" id="checkbox3" v-model="checkeds" value="CCC" checked="checked">
+    <label for="checkbox3">CCC</label>
+    <input type="checkbox" id="checkbox4" v-model="checkeds" value="DDD">
+    <label for="checkbox4">DDD</label>
+
+    <br>
+    <p>单选按钮：选中的是：{{picked}}</p>
+    <input type="radio" value="AAA" id="radio1" v-model="picked" >
+    <label for="radio1" >AAA</label>
+    <input type="radio" value="BBB" id="radio2" v-model="picked">
+    <label for="radio2" >BBB</label>
+    <input type="radio" value="CCC" id="radio3" v-model="picked">
+    <label for="radio3" >CCC</label>
+    <br>
+    <p>下拉选：选中的是：{{selected}}</p>
+    <select v-model="selected">
+      <option value="" >请选择</option>
+      <option value="1" >男</option>
+      <option value="2" >女</option>
+      <option value="3" >未知</option>
+    </select>
+
+  </div>
+  <script>
+    new Vue({
+      el: '#from',
+      data: {
+        msg: '',
+        testMsg: '',
+        checked: false,
+        checkeds: ['CCC'],
+        picked: 'CCC',
+        selected:'3'
+      }
+    })
+  </script>
+</body>
+</html>

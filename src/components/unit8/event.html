@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>事件处理器</title>
+    <script src="../../../static/js/vue.js"></script>
+</head>
+<body>
+    <div id="v-on">
+        <button @click="add">+1</button>
+        <p>这个按钮被点击了{{count}}次</p>
+        <button @keyup.enter="greet">greet</button>
+
+        <!-- 阻止单击事件冒泡 -->
+        <a @click.stop=""></a>
+        <!-- 提交事件不再重载页面 -->
+        <from @submit.prevent=""></from>
+      <!-- 修饰符可以串联  -->
+        <a @click.prevent.stop=""></a>
+      <!-- 只有修饰符 -->
+      <form v-on:submit.prevent></form>
+
+      <!-- 添加事件侦听器时使用事件捕获模式 -->
+      <div v-on:click.capture=""></div>
+
+      <!-- 只当事件在该元素本身（而不是子元素）触发时触发回调 -->
+      <div v-on:click.self=""></div>
+
+      <!-- click 事件只能点击一次，2.1.4版本新增 -->
+      <a v-on:click.once=""></a>
+    </div>
+    <script>
+      new Vue({
+        el: '#v-on',
+        data:{
+          count: 0,
+          name:'vue.js'
+        },
+        methods:{
+          add: function () {
+            return this.count++
+          },
+          greet (event) {
+            alert('hello' + this.name)
+            if (event) {
+              alert(event.target.tagName)
+
+            }
+          }
+        }
+      })
+    </script>
+</body>
+</html>
