@@ -37,7 +37,39 @@
     var child={
       template:'<h2>自定义子组件：mycom</h2>'
     }
-
+/*Prop 验证*/
+    Vue.component('',{
+      props:{
+        // 基础的类型检查 (`null` 和 `undefined` 会通过任何类型验证)
+        propA: Number,
+        // 多个可能的类型
+        propB: [String, Number],
+        // 必填的字符串
+        propC:{
+          type:String,
+          required: true
+        },
+        // 带有默认值的数字
+        propD:{
+          type: Number,
+          default: 100
+        },
+        // 带有默认值的对象
+        propE:{
+          type: Object,
+          // 对象或数组默认值必须从一个工厂函数获取
+          default: function () {
+            return{'msg':'你好！'}
+          }
+        },
+        propF:{
+          validator: function(value) {
+            // 这个值必须匹配下列字符串中的一个
+            return ['success', 'warning', 'danger'].indexOf(value) !== -1
+          }
+        }
+      }
+    })
 
     new Vue({
       el:'#my_com',
@@ -53,6 +85,64 @@
       components:{
         'mycom': child
       }
+    })
+  </script>
+
+<div id="ddiv">
+    <div id="ex">
+      <p>{{total}}</p>
+      <button-ex v-on:aaa="incrementTotal"></button-ex>
+      <button-ex v-on:aaa="incrementTotal"></button-ex>
+    </div>
+</div>
+  <script>
+    Vue.component('button-ex', {
+      template: '<button @click="incrementHandler">{{counter}}</button>',
+      data: function () {
+        return{
+          counter: 0
+        }
+      },
+      methods:{
+        incrementHandler: function () {
+          this.counter += 1;
+          this.$emit('aaa')
+        }
+      }
+    });
+    new Vue({
+      el: '#ex',
+      data:{
+        total: 0
+      },
+      methods: {
+        incrementTotal: function () {
+          this.total += 1;
+        }
+      }
+
+    })
+  </script>
+
+
+  <div id="ex2">
+    <button-ex2></button-ex2>
+    <button-ex2></button-ex2>
+    <button-ex2></button-ex2>
+  </div>
+  <script>
+    var buttonCounter2Data = {
+        count: 0
+      }
+       Vue.component('button-ex2',{
+         template: '<button @click="count++">我被电击了{{count}}</button>',
+
+         data: function () {
+           return buttonCounter2Data
+         }
+       })
+    new Vue({
+      el:'#ex2'
     })
   </script>
 </body>
